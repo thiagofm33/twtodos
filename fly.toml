@@ -1,0 +1,48 @@
+# fly.toml app configuration file generated for twtodos-thiagofm33 on 2026-05-22T14:37:14-03:00
+#
+# See https://fly.io/docs/reference/configuration/ for information about how to use this file.
+#
+
+app = 'twtodos-thiagofm33'
+primary_region = 'gru'
+
+[build]
+  dockerfile = 'Dockerfile'
+
+[processes]
+  app = 'npm start'
+
+[[services]]
+  protocol = 'tcp'
+  internal_port = 3000
+  auto_stop_machines = 'stop'
+  auto_start_machines = true
+  processes = ['app']
+
+  [[services.ports]]
+    port = 80
+    handlers = ['http']
+    force_https = true
+
+  [[services.ports]]
+    port = 443
+    handlers = ['tls', 'http']
+
+  [services.concurrency]
+    hard_limit = 25
+    soft_limit = 20
+
+  [[services.http_checks]]
+    interval = '10s'
+    timeout = '5s'
+    grace_period = '40s'
+    method = 'GET'
+    path = '/'
+    protocol = 'http'
+    tls_skip_verify = false
+
+[[vm]]
+  memory = '512mb'
+  cpu_kind = 'shared'
+  cpus = 1
+  memory_mb = 512
