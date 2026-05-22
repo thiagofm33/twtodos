@@ -1,0 +1,39 @@
+version: '3.9'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile.dev
+    container_name: twtodos-dev
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=development
+      - WATCHPACK_POLLING=true
+    tty: true
+    stdin_open: true
+    volumes:
+      # Mount source code
+      - ./src:/app/src
+      - ./public:/app/public
+      - ./package.json:/app/package.json
+      - ./tsconfig.json:/app/tsconfig.json
+      - ./next.config.ts:/app/next.config.ts
+      - ./postcss.config.mjs:/app/postcss.config.mjs
+      # Mount node_modules to avoid issues with native packages
+      - node_modules:/app/node_modules
+      # Mount .next for build artifacts (but don't persist between restarts)
+      - /app/.next
+    networks:
+      - twtodos-dev-network
+    restart: on-failure
+
+  # Optional: Add a volume container to manage node_modules
+  # This prevents conflicts between host and container dependencies
+volumes:
+  node_modules:
+
+networks:
+  twtodos-dev-network:
+    driver: bridge

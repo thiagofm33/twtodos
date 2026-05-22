@@ -1,0 +1,22 @@
+# Development stage
+FROM node:23.6-alpine
+
+WORKDIR /app
+
+# Copy package files
+COPY package*.json ./
+
+# Install all dependencies (including dev dependencies)
+RUN npm install
+
+# Copy configuration files
+COPY tsconfig.json next.config.ts postcss.config.mjs ./
+
+# Expose port
+EXPOSE 3000
+
+# Enable polling for file changes in Docker
+ENV WATCHPACK_POLLING=true
+
+# Run the development server
+CMD ["npm", "run", "dev"]
