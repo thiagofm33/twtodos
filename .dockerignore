@@ -1,0 +1,50 @@
+# Version control
+.git
+.gitignore
+
+# Dependencies
+node_modules
+npm-debug.log
+yarn-error.log
+pnpm-debug.log
+
+# Next.js build artifacts
+.next
+out
+
+# Testing
+.pytest_cache
+.coverage
+coverage
+
+# IDE
+.vscode
+.idea
+*.swp
+*.swo
+*~
+.DS_Store
+
+# Environment files (don't include in image, use secrets instead)
+.env
+.env.local
+.env.*.local
+
+# Development
+*.md
+docs
+ref
+
+# CI/CD
+.github
+.gitlab-ci.yml
+.circleci
+
+# Docker
+Dockerfile*
+docker-compose*.yml
+.dockerignore
+
+# Other
+README.md
+LICENSE
