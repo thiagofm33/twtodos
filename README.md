@@ -1,36 +1,185 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# TWTodos
 
-## Getting Started
+A modern, responsive todo application built with React, Next.js, TypeScript, and Tailwind CSS. Perfect for managing daily tasks with a clean, intuitive interface.
 
-First, run the development server:
+> 📚 **Project Purpose**: This project was developed as part of an **AI study course** to demonstrate modern web development practices, including building full-stack applications, automation with GitHub Actions, and cloud deployment strategies.
 
+## Features
+
+✨ **Core Functionality**
+- ✅ Create, read, and delete todos
+- 🎯 Mark todos as completed
+- 🗑️ Delete individual todos or clear all
+- 🔄 Drag-and-drop to reorder todos
+- 💾 Persistent storage using browser localStorage
+- 🚀 Real-time updates with auto-save
+
+📋 **Validation & UX**
+- Minimum 3 characters per todo
+- Todos must start with a capital letter
+- Error messages with clear feedback
+- Responsive design for mobile and desktop
+- Smooth animations and transitions
+
+🎨 **Technology Stack**
+- **Framework**: [Next.js 16+](https://nextjs.org) - React framework for production
+- **Language**: [TypeScript](https://www.typescriptlang.org) - Type-safe development
+- **Styling**: [Tailwind CSS](https://tailwindcss.com) - Utility-first CSS framework
+- **Runtime**: Node.js 18+
+- **Deployment**: [Fly.io](https://fly.io) with Docker
+
+## Quick Start
+
+### Prerequisites
+- Node.js 18+ and npm installed
+- Git (for cloning the repository)
+
+### Local Development
+
+1. **Clone and install**:
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+git clone <repository-url>
+cd twtodos
+npm install
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+2. **Run the development server**:
+```bash
+npm run dev
+```
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+3. **Open in browser**:
+Navigate to [http://localhost:3000](http://localhost:3000) to see the application.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+The app will automatically reload as you edit files. Local changes to `src/app/page.tsx` are reflected instantly.
 
-## Learn More
+### Build for Production
 
-To learn more about Next.js, take a look at the following resources:
+```bash
+npm run build
+npm start
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+This creates an optimized production build and starts the server on port 3000.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+## Project Structure
 
-## Deploy on Vercel
+```
+src/
+├── app/
+│   ├── layout.tsx      # Root layout
+│   ├── page.tsx        # Todo application component
+│   └── globals.css     # Global styles
+public/                 # Static assets
+Dockerfile              # Production container
+Dockerfile.dev          # Development container
+fly.toml               # Fly.io configuration
+docker-compose.yml     # Production Docker setup
+docker-compose-dev.yml # Development Docker setup
+```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Deployment
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+### Option 1: Automated Deployment (GitHub Actions)
+
+This project includes automated deployment via GitHub Actions to Fly.io.
+
+**Setup Instructions**:
+
+1. **Add Fly.io API Token**:
+   - Get your token: `flyctl auth token`
+   - Go to GitHub repo → Settings → Secrets and variables → Actions
+   - Add secret: `FLY_API_TOKEN`
+
+2. **Deploy**:
+   - Push to `main` branch
+   - GitHub Actions automatically builds and deploys
+
+**View deployment status**:
+- GitHub repo → Actions tab
+- Or use: `flyctl status`
+
+For detailed setup, see [GITHUB_ACTIONS_SETUP.md](GITHUB_ACTIONS_SETUP.md)
+
+### Option 2: Manual Deployment to Fly.io
+
+1. **Prerequisites**:
+   - Fly.io account (https://fly.io)
+   - Fly CLI installed: `npm install -g flyctl` or `brew install flyctl`
+
+2. **Setup**:
+```bash
+# Login to Fly.io
+flyctl auth login
+
+# Deploy the app
+flyctl deploy
+```
+
+3. **Verify deployment**:
+```bash
+flyctl status
+flyctl logs
+flyctl open  # Opens your deployed app
+```
+
+**Environment Variables**:
+```bash
+flyctl secrets set KEY=value
+```
+
+See [FLY_DEPLOYMENT.md](FLY_DEPLOYMENT.md) for detailed Fly.io configuration.
+
+### Option 3: Docker Deployment
+
+**Production build**:
+```bash
+docker-compose up -d
+```
+
+**Development with hot reload**:
+```bash
+docker-compose -f docker-compose-dev.yml up
+```
+
+## Available Scripts
+
+- `npm run dev` - Start development server with hot reload
+- `npm run build` - Build for production
+- `npm start` - Start production server
+- `npm run lint` - Run ESLint (if configured)
+
+## Docker
+
+**Build and run with Docker**:
+```bash
+docker build -t twtodos .
+docker run -p 3000:3000 twtodos
+```
+
+The app runs on port 3000 inside the container and is mapped to port 3000 on your host.
+
+## Browser Compatibility
+
+- Chrome/Edge 90+
+- Firefox 88+
+- Safari 14+
+- Mobile browsers (iOS Safari, Chrome Android)
+
+LocalStorage is required for todo persistence.
+
+## Learning Resources
+
+- [Next.js Documentation](https://nextjs.org/docs)
+- [TypeScript Handbook](https://www.typescriptlang.org/docs)
+- [Tailwind CSS Docs](https://tailwindcss.com/docs)
+- [React Hooks Guide](https://react.dev/reference/react/hooks)
+- [Fly.io Docs](https://fly.io/docs)
+
+## License
+
+This project is open source and available under the MIT License.
+
+## Support
+
+For issues, questions, or suggestions, please open an issue on GitHub.
