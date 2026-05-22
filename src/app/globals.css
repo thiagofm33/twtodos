@@ -1,26 +1,106 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  /* Light theme colors (default) */
+  --bg-primary: #ffffff;
+  --bg-secondary: #f8f9fa;
+  --text-primary: #171717;
+  --text-secondary: #666666;
+  --border-color: #e5e7eb;
+  --header-bg: #2563eb;
+  --footer-bg: #1f2937;
+  --input-bg: #ffffff;
+  --input-border: #d1d5db;
+  --card-bg: #ffffff;
+  --hover-bg: #f3f4f6;
+  --drag-over-bg: #dbeafe;
+  --delete-btn: #dc2626;
+  --delete-btn-hover: #b91c1c;
+}
+
+/* Apply dark theme based on system preference */
+@media (prefers-color-scheme: dark) {
+  :root {
+    /* Dark theme colors */
+    --bg-primary: #1a1a1a;
+    --bg-secondary: #0f0f0f;
+    --text-primary: #f0f0f0;
+    --text-secondary: #b0b0b0;
+    --border-color: #404040;
+    --header-bg: #1e40af;
+    --footer-bg: #111827;
+    --input-bg: #262626;
+    --input-border: #404040;
+    --card-bg: #1f1f1f;
+    --hover-bg: #2a2a2a;
+    --drag-over-bg: #1e3a8a;
+    --delete-btn: #991b1b;
+    --delete-btn-hover: #7f1d1d;
+  }
+}
+
+html.dark {
+  /* Fallback for explicit dark class if needed */
+  --bg-primary: #1a1a1a;
+  --bg-secondary: #0f0f0f;
+  --text-primary: #f0f0f0;
+  --text-secondary: #b0b0b0;
+  --border-color: #404040;
+  --header-bg: #1e40af;
+  --footer-bg: #111827;
+  --input-bg: #262626;
+  --input-border: #404040;
+  --card-bg: #1f1f1f;
+  --hover-bg: #2a2a2a;
+  --drag-over-bg: #1e3a8a;
+  --delete-btn: #991b1b;
+  --delete-btn-hover: #7f1d1d;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
+  --color-background: var(--bg-primary);
+  --color-foreground: var(--text-primary);
   --font-sans: var(--font-geist-sans);
   --font-mono: var(--font-geist-mono);
 }
 
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+body {
+  background: var(--bg-secondary);
+  color: var(--text-primary);
+  font-family: Arial, Helvetica, sans-serif;
+  padding-bottom: 100px;
+  transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+.todo-item {
+  @apply flex items-center justify-between p-3 cursor-move transition-colors;
+  background-color: var(--card-bg);
+  border-bottom: 1px solid var(--border-color);
+}
+
+.todo-item:hover {
+  background-color: var(--hover-bg);
+}
+
+.todo-text {
+  @apply flex-1 m-0;
+  color: var(--text-primary);
+}
+
+.todo-controls {
+  @apply flex gap-2;
+}
+
+.btn-drag {
+  @apply cursor-grab active:cursor-grabbing p-1 px-2 text-xs;
+  color: var(--text-secondary);
+  transition: color 0.2s ease;
+}
+
+.btn-drag:hover {
+  color: var(--text-primary);
+}
+
+.drag-over {
+  background-color: var(--drag-over-bg);
 }
